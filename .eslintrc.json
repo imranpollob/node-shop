@@ -16,6 +16,8 @@
     },
     "rules": {
         "no-unused-vars": "warn",
-        "no-plusplus": 0
+        "no-plusplus": 0,
+        "comma-dangle": 0,
+        "no-shadow": 1
     }
 }
