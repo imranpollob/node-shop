@@ -3,11 +3,11 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
-  name: {
+  email: {
     type: String,
     required: true
   },
-  email: {
+  password: {
     type: String,
     required: true
   },
@@ -19,10 +19,7 @@ const userSchema = new Schema({
           ref: 'Product',
           required: true
         },
-        quantity: {
-          type: Number,
-          required: true
-        }
+        quantity: { type: Number, required: true }
       }
     ]
   }
@@ -52,9 +49,7 @@ userSchema.methods.addToCart = function (product) {
 };
 
 userSchema.methods.removeFromCart = function (productId) {
-  const updatedCartItems = this.cart.items.filter(
-    item => item.productId.toString() !== productId.toString()
-  );
+  const updatedCartItems = this.cart.items.filter(item => item.productId.toString() !== productId.toString());
   this.cart.items = updatedCartItems;
   return this.save();
 };
