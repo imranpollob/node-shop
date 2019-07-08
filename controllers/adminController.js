@@ -22,7 +22,6 @@ exports.postAddProduct = (req, res, next) => {
   product
     .save()
     .then((result) => {
-      console.log('Product Created');
       res.redirect('/admin/products');
     })
     .catch((err) => {
@@ -36,12 +35,12 @@ exports.getEditProduct = (req, res, next) => {
     return res.redirect('/');
   }
   const prodId = req.params.productId;
-  Product.findById(prodId)
+  return Product.findById(prodId)
     .then((product) => {
       if (!product) {
         return res.redirect('/');
       }
-      res.render('admin/edit-product', {
+      return res.render('admin/edit-product', {
         pageTitle: 'Edit Product',
         path: '/admin/edit-product',
         editing: editMode,
@@ -67,7 +66,6 @@ exports.postEditProduct = (req, res, next) => {
       return product.save();
     })
     .then((result) => {
-      console.log('Product Updated');
       res.redirect('/admin/products');
     })
     .catch(err => console.log(err));
@@ -75,10 +73,7 @@ exports.postEditProduct = (req, res, next) => {
 
 exports.getProducts = (req, res, next) => {
   Product.find()
-  // .select('title price -_id')
-  // .populate('userId', 'name')
     .then((products) => {
-      console.log(products);
       res.render('admin/products', {
         prods: products,
         pageTitle: 'Admin Products',
@@ -92,7 +87,6 @@ exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
   Product.findByIdAndRemove(prodId)
     .then(() => {
-      console.log('Product Deleted');
       res.redirect('/admin/products');
     })
     .catch(err => console.log(err));
